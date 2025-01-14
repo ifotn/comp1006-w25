@@ -35,6 +35,9 @@ $db = null;
 
 // 7 - show confirmation message
 echo 'Your Registration was Saved';
+
+// 8 - optional redirect
+header('location:login.php');
 ?>
 </body>
 </html>
