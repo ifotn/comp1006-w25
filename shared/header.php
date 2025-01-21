@@ -5,6 +5,9 @@
     <a href="about.php">
         About
     </a>
+    <a href="countries.php">
+        Countries
+    </a>
     <a href="login.php">
         Login
     </a>

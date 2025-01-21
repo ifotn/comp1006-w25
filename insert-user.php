@@ -14,7 +14,11 @@ $password = $_POST['password'];
 //echo "$username - $password";
 
 // 2 - connect to db
-$db = new PDO('mysql:host=127.0.0.1;dbname=comp1006', 'root', 'C@mp1006'); 
+// local db
+//$db = new PDO('mysql:host=127.0.0.1;dbname=comp1006', 'root', 'C@mp1006'); 
+
+// live aws db
+include('shared/db.php');
 
 // 3 - set up SQL INSERT to add new record to db
 $sql = "INSERT INTO users (username, password) VALUES (:username, :password)";
@@ -37,7 +41,7 @@ $db = null;
 echo 'Your Registration was Saved';
 
 // 8 - optional redirect
-header('location:login.php');
+//header('location:login.php');
 ?>
 </body>
 </html>
