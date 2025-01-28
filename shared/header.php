@@ -8,6 +8,9 @@
     <a href="countries.php">
         Countries
     </a>
+    <a href="destinations.php">
+        Destinations
+    </a>
     <a href="login.php">
         Login
     </a>

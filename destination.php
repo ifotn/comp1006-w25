@@ -11,15 +11,15 @@
     <form method="post" action="save-destination.php">
     <fieldset>
         <label for="name">Name:</label>
-        <input name="name" />
+        <input name="name" required maxlength="50" />
     </fieldset>
     <fieldset>
         <label for="attractions">Attractions:</label>
-        <textarea name="attractions"></textarea>
+        <textarea name="attractions" maxlength="255"></textarea>
     </fieldset>
     <fieldset>
         <label for="countryId">Country:</label>
-        <select name="countryId">
+        <select name="countryId" required>
             <?php
             // connect
             include ('shared/db.php');
