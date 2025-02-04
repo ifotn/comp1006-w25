@@ -28,7 +28,8 @@
         <div id="navbar-menu" class="detached">
           <ul class="navbar-links">
             <li class="navbar-item">
-              <a class="navbar-link" href="about.php">About</a>
+              <a class="navbar-link" href="about.php">About
+                </a>
             </li>
             <li class="navbar-item">
               <a class="navbar-link" href="countries.php">Countries</a>
