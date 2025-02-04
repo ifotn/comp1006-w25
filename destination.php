@@ -1,12 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Destination</title>
-</head>
-<body>
-    <?php include ('shared/header.php'); ?>
+<?php 
+    $title = 'Destination Details';
+    include('shared/header.php'); ?>
     <h1>Destination Details</h1>
     <form method="post" action="save-destination.php">
     <fieldset>
@@ -46,5 +40,6 @@
     </fieldset>
     <button>Save</button>
     </form>
+        </main>
 </body>
 </html>

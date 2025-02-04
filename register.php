@@ -1,12 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register</title>
-</head>
-<body>
-    <?php include('shared/header.php'); ?>
+<?php 
+    $title = 'Register';
+    include('shared/header.php'); ?>
     <h1>Register</h1>
     <form method="post" action="insert-user.php">
         <fieldset>
@@ -19,5 +13,6 @@
         </fieldset>
         <button>Register</button>
     </form>
+</main>
 </body>
 </html>
