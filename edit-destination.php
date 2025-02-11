@@ -64,6 +64,7 @@
             ?> />
     </fieldset>
     <button>Save</button>
+    <input type="hidden" name="destinationId" value="<?php echo $destinationId; ?>" />
     </form>
         </main>
 </body>
