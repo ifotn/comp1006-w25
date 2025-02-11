@@ -19,12 +19,8 @@
                 <td>{$destination['countryId']}</td>
                 <td>{$destination['visited']}</td>
                 <td>
-                    <a href=\"edit-destination.php?destinationId={$destination['destinationId']}\">
-                        <input type=\"button\" value=\"Edit\" />
-                    </a>
-                    <a href=\"delete-destination.php?destinationId={$destination['destinationId']}\" onclick=\"return confirmDelete()\">
-                        <input type=\"button\" value=\"Delete\" />
-                    </a>
+                    <a href=\"edit-destination.php?destinationId={$destination['destinationId']}\"><input type=\"button\" value=\"Edit\" class=\"btn\" /></a>
+                    <a href=\"delete-destination.php?destinationId={$destination['destinationId']}\" onclick=\"return confirmDelete()\"><input type=\"button\" value=\"Delete\" class=\"btn\" /></a>
                 </td>
                 </tr>";
         }

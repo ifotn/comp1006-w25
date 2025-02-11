@@ -268,3 +268,51 @@ main {
     display: flex;
     flex-direction: column;
 }*/
+
+button, .btn {
+    background-color: var(--navbar-bg-color);
+    padding: 5px;
+    color: var(--navbar-text-color);
+    width: 100px;
+    margin: 5px;
+    font-weight: bold;
+    font-family: 'Benguiat', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+table {
+    width: 100%;
+    padding: 5px;
+}
+
+th {
+    background-color: var(--navbar-bg-contrast);
+    color: var(--navbar-text-color-focus);
+}
+
+tr {
+    background-color: lightgrey;
+}
+
+td {
+    margin-left: 5px;
+    padding-left: 5px;
+}
+
+fieldset {
+    margin: 10px;
+    padding: 10px;
+    border: none;
+}
+
+label {
+    width: 180px;
+    vertical-align: top;
+    display: inline-block;
+}
+
+textarea {
+    width: 500px;
+    height: 250px;
+}
