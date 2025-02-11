@@ -2,7 +2,7 @@
     $title = 'Destinations';
     include('shared/header.php'); ?>
     <h1>Destinations</h1>
-    <a href="destination.php">Add a New Destination</a>
+    <a href="add-destination.php">Add a New Destination</a>
     <?php
     include ('shared/db.php');
 
@@ -19,6 +19,9 @@
                 <td>{$destination['countryId']}</td>
                 <td>{$destination['visited']}</td>
                 <td>
+                    <a href=\"edit-destination.php?destinationId={$destination['destinationId']}\">
+                        <input type=\"button\" value=\"Edit\" />
+                    </a>
                     <a href=\"delete-destination.php?destinationId={$destination['destinationId']}\" onclick=\"return confirmDelete()\">
                         <input type=\"button\" value=\"Delete\" />
                     </a>

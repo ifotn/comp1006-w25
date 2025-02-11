@@ -2,7 +2,7 @@
     $title = 'Destination Details';
     include('shared/header.php'); ?>
     <h1>Destination Details</h1>
-    <form method="post" action="save-destination.php">
+    <form method="post" action="insert-destination.php">
     <fieldset>
         <label for="name">Name:</label>
         <input name="name" required maxlength="50" />
