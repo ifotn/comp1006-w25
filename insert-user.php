@@ -10,38 +10,65 @@
 // 1 - capture form inputs using $_POST array
 $username = $_POST['username'];
 $password = $_POST['password'];
+$ok = true;
 
-//echo "$username - $password";
+// validate
+if (!filter_var($username, FILTER_VALIDATE_EMAIL)) {
+    echo 'Username must be a properly-formatted email';
+    $ok = false;
+}
 
-// 2 - connect to db
-// local db
-//$db = new PDO('mysql:host=127.0.0.1;dbname=comp1006', 'root', 'C@mp1006'); 
+if (!preg_match('@[A-Z]@', $password)) {
+    echo 'Invalid password format';
+    $ok = false;
+}
 
-// live aws db
-include('shared/db.php');
+if (!preg_match('@[a-z]@', $password)) {
+    echo 'Invalid password format';
+    $ok = false;
+}
 
-// 3 - set up SQL INSERT to add new record to db
-$sql = "INSERT INTO users (username, password) VALUES (:username, :password)";
+if (!preg_match('@[0-9]@', $password)) {
+    echo 'Invalid password format';
+    $ok = false;
+}
 
-// here is the unsafe version!!  I will deduct marks for this
-//$sql = "INSERT INTO users (username, password) VALUES ($username, $password)";
+if (!preg_match('@[^\W]@', $password)) {
+    echo 'Invalid password format';
+    $ok = false;
+}
 
-// 4 - pass each form value as a parameter to the insert for safety
-$cmd = $db->prepare($sql);
-$cmd->bindParam(':username', $username, PDO::PARAM_STR, 50);
-$cmd->bindParam(':password', $password, PDO::PARAM_STR, 128);
+if ($ok) {
+    
+    // live aws db
+    include('shared/db.php');
 
-// 5 - execute the save
-$cmd->execute();
+    // 3 - set up SQL INSERT to add new record to db
+    $sql = "INSERT INTO users (username, password) VALUES (:username, :password)";
 
-// 6 - disconnect
-$db = null;
+    // here is the unsafe version!!  I will deduct marks for this
+    //$sql = "INSERT INTO users (username, password) VALUES ($username, $password)";
 
-// 7 - show confirmation message
-echo 'Your Registration was Saved';
+    // 4 - pass each form value as a parameter to the insert for safety
+    $cmd = $db->prepare($sql);
+    $cmd->bindParam(':username', $username, PDO::PARAM_STR, 50);
+    // old code - no hasing => UNSAFE!!
+    //$cmd->bindParam(':password', $password, PDO::PARAM_STR, 128);
+    // new code - hashing => SAFETY
+    $cmd->bindParam(':password', password_hash($password, PASSWORD_DEFAULT), PDO::PARAM_STR, 128);
 
-// 8 - optional redirect
-//header('location:login.php');
+    // 5 - execute the save
+    $cmd->execute();
+
+    // 6 - disconnect
+    $db = null;
+
+    // 7 - show confirmation message
+    echo 'Your Registration was Saved';
+
+    // 8 - optional redirect
+    //header('location:login.php');
+}
 ?>
 </body>
 </html>
