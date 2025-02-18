@@ -1,12 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Saving your Registration...</title>
-</head>
-<body>
 <?php
+$title = 'Saving Registration...';
+include('shared/header.php');
+
 // 1 - capture form inputs using $_POST array
 $username = $_POST['username'];
 $password = $_POST['password'];
@@ -38,10 +33,27 @@ if (!preg_match('@[^\W]@', $password)) {
     $ok = false;
 }
 
+if (strlen(trim($password)) < 8) {
+    echo 'Invalid password format';
+    $ok = false;
+}
+
 if ($ok) {
-    
     // live aws db
     include('shared/db.php');
+
+    // check if username already exists
+    $sql = "SELECT * FROM users WHERE username = :username";
+    $cmd = $db->prepare($sql);
+    $cmd->bindParam(':username', $username, PDO::PARAM_STR);
+    $cmd->execute();
+    $user = $cmd->fetch();
+    
+    if ($user) {
+        echo 'User already exists';
+        $db = null;
+        exit();  // don't process any more php code
+    }
 
     // 3 - set up SQL INSERT to add new record to db
     $sql = "INSERT INTO users (username, password) VALUES (:username, :password)";
@@ -55,7 +67,8 @@ if ($ok) {
     // old code - no hasing => UNSAFE!!
     //$cmd->bindParam(':password', $password, PDO::PARAM_STR, 128);
     // new code - hashing => SAFETY
-    $cmd->bindParam(':password', password_hash($password, PASSWORD_DEFAULT), PDO::PARAM_STR, 128);
+    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+    $cmd->bindParam(':password', $hashedPassword, PDO::PARAM_STR, 128);
 
     // 5 - execute the save
     $cmd->execute();
@@ -64,7 +77,7 @@ if ($ok) {
     $db = null;
 
     // 7 - show confirmation message
-    echo 'Your Registration was Saved';
+    echo 'Your Registration was Saved. Use the Login link above to sign in.';
 
     // 8 - optional redirect
     //header('location:login.php');
