@@ -2,6 +2,11 @@
 $title = 'Login';
 include('shared/header.php'); ?>
 <h1>Login</h1>
+<?php
+if (isset($_GET['invalid'])) {
+    echo '<h5 class="err">Invalid Login</h5>';
+}
+?>
 <form method="post" action="check-login.php">
     <fieldset>
         <label for="username">Email:</label>

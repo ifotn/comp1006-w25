@@ -317,6 +317,6 @@ textarea {
     height: 250px;
 }
 
-#pwMsg {
+#pwMsg, .err {
     background-color: #B4975A;
 }
