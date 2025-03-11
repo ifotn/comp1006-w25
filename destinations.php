@@ -4,7 +4,7 @@
     <h1>Destinations</h1>
     <?php
     // only call session_start ONCE per page
-    session_start();
+    //session_start(); - commented here as session_start already called in header above
     if (isset($_SESSION['username'])) {
         echo '<a href="add-destination.php">Add a New Destination</a>';
     }

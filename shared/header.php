@@ -43,11 +43,14 @@
             - Anonymous users see Login & Register
             - Authenticated user see their username & Logout
             */
-            session_start();
+            if (session_status() == PHP_SESSION_NONE) {
+              session_start();
+            }
+  
             if (isset($_SESSION['username'])) {
                 echo '
-                  <li class="navbar-item">' . $_SESSION['username'] . '</li>
-                  <li class="navbar-item"><a href="logout.php">Logout</a></li>';           
+                  <li class="navbar-item"><a href="#" class="navbar-link">' . $_SESSION['username'] . '</a></li>
+                  <li class="navbar-item"><a href="logout.php" class="navbar-link">Logout</a></li>';           
             }
             else {
               echo '
