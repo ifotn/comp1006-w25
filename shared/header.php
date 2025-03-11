@@ -38,12 +38,27 @@
             <li class="navbar-item">
               <a class="navbar-link" href="destinations.php">Destinations</a>
             </li>
-            <li class="navbar-item">
-              <a class="navbar-link" href="login.php">Login</a>
-            </li>
-            <li class="navbar-item">
-              <a class="navbar-link" href="register.php">Register</a>
-            </li>
+            <?php
+            /* check session var to determine which links to show
+            - Anonymous users see Login & Register
+            - Authenticated user see their username & Logout
+            */
+            session_start();
+            if (isset($_SESSION['username'])) {
+                echo '
+                  <li class="navbar-item">' . $_SESSION['username'] . '</li>
+                  <li class="navbar-item"><a href="logout.php">Logout</a></li>';           
+            }
+            else {
+              echo '
+              <li class="navbar-item">
+                <a class="navbar-link" href="login.php">Login</a>
+              </li>
+              <li class="navbar-item">
+                <a class="navbar-link" href="register.php">Register</a>
+              </li>';
+            }
+            ?>
           </ul>
         </div>
       </nav>
