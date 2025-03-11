@@ -1,4 +1,7 @@
 <?php
+// auth check: only let authenticated users access this page
+include('shared/auth-check.php');
+
 // get destinationId from URL parameter using GET
 $destinationId = $_GET['destinationId'];
 

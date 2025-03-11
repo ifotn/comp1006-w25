@@ -1,4 +1,7 @@
-<?php 
+<?php
+// auth check: only let authenticated users access this page
+include('shared/auth-check.php');
+
     $title = 'Destination Details';
     include('shared/header.php'); 
     

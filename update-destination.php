@@ -1,3 +1,7 @@
+<?php
+// auth check: only let authenticated users access this page
+include('shared/auth-check.php');
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
