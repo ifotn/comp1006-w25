@@ -58,25 +58,33 @@ else if (!is_numeric($countryId)) {
 // photo check & validation
 if (isset($_FILES['photo'])) {
     // original file name + extension
-    echo $_FILES['photo']['name'] . '<br />';
+    //echo $_FILES['photo']['name'] . '<br />';
 
     // file size in bytes (1 kb = 1024 kb)
-    echo $_FILES['photo']['size'] . '<br />';
+    //echo $_FILES['photo']['size'] . '<br />';
 
     // file type - only based on extension and is NOT accurate or safe
-    echo $_FILES['photo']['type'] . '<br />';
+    //echo $_FILES['photo']['type'] . '<br />';
 
     // temp location of upload in server cache
-    echo $_FILES['photo']['tmp_name'] . '<br />';
+    //echo $_FILES['photo']['tmp_name'] . '<br />';
 
     // use MIME type instead of type to check the ACTUAL file type, not just extension
-    echo mime_content_type($_FILES['photo']['tmp_name']) . '<br />';
+    //echo mime_content_type($_FILES['photo']['tmp_name']) . '<br />';
 
-    // copy upload to img directory
-    move_uploaded_file($_FILES['photo']['tmp_name'], 'img/' . $_FILES['photo']['name']);
+    $type = mime_content_type($_FILES['photo']['tmp_name']);
+    if ($type != 'image/jpeg' && $type != 'image/png') {
+        echo 'Please upload a valid image file';
+        $ok = false;
+    }
+    else {
+        // create unique name to prevent file overwriting. e.g. logo.png => sd98r32wrli-logo.png
+        $photo = uniqid() . '-' . $_FILES['photo']['name'];
+
+        // copy upload to img directory
+        move_uploaded_file($_FILES['photo']['tmp_name'], 'img/' . $photo);
+    }    
 }
-
-exit();
 
 // only save to db if we have no validation errors
 if ($ok == true) {
@@ -84,8 +92,8 @@ if ($ok == true) {
     include ('shared/db.php');
 
     // set up sql insert
-    $sql = "INSERT INTO destinations (name, attractions, countryId, visited) VALUES 
-        (:name, :attractions, :countryId, :visited)";
+    $sql = "INSERT INTO destinations (name, attractions, countryId, visited, photo) VALUES 
+        (:name, :attractions, :countryId, :visited, :photo)";
     $cmd = $db->prepare($sql);
 
     // fill insert params for safety
@@ -93,9 +101,10 @@ if ($ok == true) {
     $cmd->bindParam(':attractions', $attractions, PDO::PARAM_STR, 255);
     $cmd->bindParam(':countryId', $countryId, PDO::PARAM_INT);
     $cmd->bindParam(':visited', $visited, PDO::PARAM_BOOL);
+    $cmd->bindParam(':photo', $photo, PDO::PARAM_STR, 100);
 
     // execute insert
-   // $cmd->execute();
+    $cmd->execute();
 
     // disconnect
     $db = null;

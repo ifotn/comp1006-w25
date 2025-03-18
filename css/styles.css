@@ -320,3 +320,7 @@ textarea {
 #pwMsg, .err {
     background-color: #B4975A;
 }
+
+.thumbnail {
+    width: 100px;
+}

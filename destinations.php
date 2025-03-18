@@ -16,7 +16,7 @@
     $cmd->execute();
     $destinations = $cmd->fetchAll();
 
-    echo '<table><thead><th>Name</th><th>Attractions</th><th>Country</th><th>Visited</th>';
+    echo '<table><thead><th>Name</th><th>Photo</th><th>Attractions</th><th>Country</th><th>Visited</th>';
     // only show Actions heading to authenticated users
     if (isset($_SESSION['username'])) {
         echo '<th>Actions</th>';
@@ -26,6 +26,11 @@
         foreach ($destinations as $destination) {
             echo "<tr>
                 <td>{$destination['name']}</td>
+                <td>";
+                if (isset($destination['photo'])) {
+                    echo '<img src="img/' . $destination['photo'] . '" alt="Destination Photo" class="thumbnail" />';
+                }
+                echo "</td>
                 <td>{$destination['attractions']}</td>
                 <td>{$destination['countryId']}</td>
                 <td>{$destination['visited']}</td>"; 
