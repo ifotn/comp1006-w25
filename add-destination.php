@@ -5,7 +5,7 @@ include('shared/auth-check.php');
     $title = 'Destination Details';
     include('shared/header.php'); ?>
     <h1>Destination Details</h1>
-    <form method="post" action="insert-destination.php">
+    <form method="post" action="insert-destination.php" enctype="multipart/form-data">
     <fieldset>
         <label for="name">Name:</label>
         <input name="name" required maxlength="50" />
@@ -40,6 +40,10 @@ include('shared/auth-check.php');
     <fieldset>
         <label for="visited">Visited:</label>
         <input type="checkbox" name="visited" />
+    </fieldset>
+    <fieldset>
+        <label for="photo">Photo:</label>
+        <input type="file" name="photo" />
     </fieldset>
     <button>Save</button>
     </form>
