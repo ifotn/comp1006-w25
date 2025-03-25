@@ -1,0 +1,4 @@
+ErrorDocument 404 https://lamp.computerstudi.es/~Rich100/comp1006/404.php
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule \.php$ https://lamp.computerstudi.es/~Rich100/comp1006/404.php [L]
