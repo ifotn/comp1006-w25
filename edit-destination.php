@@ -9,6 +9,7 @@ include('shared/auth-check.php');
     // get id from url
     $destinationId = $_GET['destinationId'];
 
+try {
     // set up query
     include('shared/db.php');
     $sql = "SELECT * FROM destinations WHERE destinationId = :destinationId";
@@ -18,6 +19,11 @@ include('shared/auth-check.php');
     // run query & store result.  use fetch not fetchAll when selecting only 1 record
     $cmd->execute();
     $destination = $cmd->fetch();
+}
+catch (Exception $err) {
+    // show generic error page, not the error description
+    header('location:error.php');
+}
     ?>
     <h1>Destination Details</h1>
     <form method="post" action="update-destination.php" enctype="multipart/form-data">
@@ -35,25 +41,30 @@ include('shared/auth-check.php');
             <?php
             // connect - commented as we now connect above first
             //include ('shared/db.php');
-
+            try {
             // fetch & store country list from db
-            $sql = "SELECT * FROM countries ORDER BY name ASC";
-            $cmd = $db->prepare($sql);
-            $cmd->execute();
-            $countries = $cmd->fetchAll();
+                $sql = "SELECT * FROM countries ORDER BY name ASC";
+                $cmd = $db->prepare($sql);
+                $cmd->execute();
+                $countries = $cmd->fetchAll();
 
-            // add each country to dropdown
-            foreach ($countries as $country) {
-                if ($country['countryId'] === $destination['countryId']) {
-                    echo '<option selected value="' . $country['countryId'] . '">' . $country['name'] . '</option>';
+                // add each country to dropdown
+                foreach ($countries as $country) {
+                    if ($country['countryId'] === $destination['countryId']) {
+                        echo '<option selected value="' . $country['countryId'] . '">' . $country['name'] . '</option>';
+                    }
+                    else {
+                        echo '<option value="' . $country['countryId'] . '">' . $country['name'] . '</option>';
+                    }               
                 }
-                else {
-                    echo '<option value="' . $country['countryId'] . '">' . $country['name'] . '</option>';
-                }               
-            }
 
-            // disconnect
-            $db = null;
+                // disconnect
+                $db = null;
+            }
+            catch (Exception $err) {
+                // show generic error page, not the error description
+                header('location:error.php');
+            }
             ?>
         </select>
     </fieldset>

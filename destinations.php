@@ -9,6 +9,7 @@
         echo '<a href="add-destination.php">Add a New Destination</a>';
     }
 
+try {
     include ('shared/db.php');
 
     $sql = "SELECT destinationId, destinations.name, attractions, photo, visited, countries.name AS country FROM destinations INNER JOIN countries ON destinations.countryId = countries.countryId";
@@ -46,6 +47,11 @@
     echo '</table>';
 
     $db = null;
+}
+catch (Exception $err) {
+    // show generic error page, not the error description
+    header('location:error.php');
+}
     ?>
     </main>
 </body>

@@ -88,29 +88,35 @@ if ($_FILES['photo']['size'] > 0) {
 
 // only save to db if we have no validation errors
 if ($ok == true) {
-    // connect
-    include ('shared/db.php');
+    try {
+        // connect
+        include ('shared/db.php');
 
-    // set up sql insert
-    $sql = "INSERT INTO destinations (name, attractions, countryId, visited, photo) VALUES 
-        (:name, :attractions, :countryId, :visited, :photo)";
-    $cmd = $db->prepare($sql);
+        // set up sql insert
+        $sql = "INSERT INTO destinations (name, attractions, countryId, visited, photo) VALUES 
+            (:name, :attractions, :countryId, :visited, :photo)";
+        $cmd = $db->prepare($sql);
 
-    // fill insert params for safety
-    $cmd->bindParam(':name', $name, PDO::PARAM_STR, 50);
-    $cmd->bindParam(':attractions', $attractions, PDO::PARAM_STR, 255);
-    $cmd->bindParam(':countryId', $countryId, PDO::PARAM_INT);
-    $cmd->bindParam(':visited', $visited, PDO::PARAM_BOOL);
-    $cmd->bindParam(':photo', $photo, PDO::PARAM_STR, 100);
+        // fill insert params for safety
+        $cmd->bindParam(':name', $name, PDO::PARAM_STR, 50);
+        $cmd->bindParam(':attractions', $attractions, PDO::PARAM_STR, 255);
+        $cmd->bindParam(':countryId', $countryId, PDO::PARAM_INT);
+        $cmd->bindParam(':visited', $visited, PDO::PARAM_BOOL);
+        $cmd->bindParam(':photo', $photo, PDO::PARAM_STR, 100);
 
-    // execute insert
-    $cmd->execute();
+        // execute insert
+        $cmd->execute();
 
-    // disconnect
-    $db = null;
+        // disconnect
+        $db = null;
 
-    // confirmation
-    echo 'Destination saved';
+        // confirmation
+        echo 'Destination saved';
+    }
+    catch (Exception $err) {
+        // show generic error page, not the error description
+        header('location:error.php');
+    }
 }
 ?>
 </body>
