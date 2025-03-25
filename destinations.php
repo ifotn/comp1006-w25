@@ -11,7 +11,7 @@
 
     include ('shared/db.php');
 
-    $sql = "SELECT * FROM destinations";
+    $sql = "SELECT destinationId, destinations.name, attractions, photo, visited, countries.name AS country FROM destinations INNER JOIN countries ON destinations.countryId = countries.countryId";
     $cmd = $db->prepare($sql);
     $cmd->execute();
     $destinations = $cmd->fetchAll();
@@ -32,7 +32,7 @@
                 }
                 echo "</td>
                 <td>{$destination['attractions']}</td>
-                <td>{$destination['countryId']}</td>
+                <td>{$destination['country']}</td>
                 <td>{$destination['visited']}</td>"; 
             // only show Edit / Delete buttons to authenticated users         
             if (isset($_SESSION['username'])) {
