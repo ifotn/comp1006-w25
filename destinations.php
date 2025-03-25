@@ -27,7 +27,7 @@
             echo "<tr>
                 <td>{$destination['name']}</td>
                 <td>";
-                if (isset($destination['photo'])) {
+                if ($destination['photo'] != null) {
                     echo '<img src="img/' . $destination['photo'] . '" alt="Destination Photo" class="thumbnail" />';
                 }
                 echo "</td>

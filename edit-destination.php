@@ -20,7 +20,7 @@ include('shared/auth-check.php');
     $destination = $cmd->fetch();
     ?>
     <h1>Destination Details</h1>
-    <form method="post" action="update-destination.php">
+    <form method="post" action="update-destination.php" enctype="multipart/form-data">
     <fieldset>
         <label for="name">Name:</label>
         <input name="name" required maxlength="50" value="<?php echo $destination['name']; ?>" />
@@ -65,6 +65,17 @@ include('shared/auth-check.php');
                 echo "checked";
             } 
             ?> />
+    </fieldset>
+    <fieldset>
+        <label for="photo">Photo:</label>
+        <input type="file" name="photo" />
+        <?php
+        // display fullsize photo if there is one 
+        if ($destination['photo'] != null) {
+            echo '<img src="img/' . $destination['photo'] . '" alt="Destination Photo" />';
+        }
+        ?>
+        <input type="hidden" name="currentPhoto" value="<?php echo $destination['photo']; ?>" />
     </fieldset>
     <button>Save</button>
     <input type="hidden" name="destinationId" value="<?php echo $destinationId; ?>" />

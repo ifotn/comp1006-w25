@@ -61,13 +61,33 @@ else if (!is_numeric($countryId)) {
     $ok = false;
 }
 
+// photo check & validation
+if ($_FILES['photo']['size'] > 0) {
+    $type = mime_content_type($_FILES['photo']['tmp_name']);
+    if ($type != 'image/jpeg' && $type != 'image/png') {
+        echo 'Please upload a valid image file';
+        $ok = false;
+    }
+    else {
+        // create unique name to prevent file overwriting. e.g. logo.png => sd98r32wrli-logo.png
+        $photo = uniqid() . '-' . $_FILES['photo']['name'];
+
+        // copy upload to img directory
+        move_uploaded_file($_FILES['photo']['tmp_name'], 'img/' . $photo);
+    }    
+}
+else {
+    // no new photo uploaded, keep existing photo name from hidden form input
+    $photo = $_POST['currentPhoto'];
+}
+
 // only save to db if we have no validation errors
 if ($ok == true) {
     // connect
     include ('shared/db.php');
 
     // set up sql update
-    $sql = "UPDATE destinations SET name = :name, attractions = :attractions, countryId = :countryId, visited = :visited WHERE destinationId = :destinationId";
+    $sql = "UPDATE destinations SET name = :name, attractions = :attractions, countryId = :countryId, visited = :visited, photo = :photo WHERE destinationId = :destinationId";
     $cmd = $db->prepare($sql);
 
     // fill insert params for safety
@@ -76,6 +96,7 @@ if ($ok == true) {
     $cmd->bindParam(':countryId', $countryId, PDO::PARAM_INT);
     $cmd->bindParam(':visited', $visited, PDO::PARAM_BOOL);
     $cmd->bindParam(':destinationId', $destinationId, PDO::PARAM_INT);
+    $cmd->bindParam(':photo', $photo, PDO::PARAM_STR, 100);
 
     // execute insert
     $cmd->execute();

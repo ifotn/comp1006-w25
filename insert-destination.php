@@ -56,7 +56,7 @@ else if (!is_numeric($countryId)) {
 }
 
 // photo check & validation
-if (isset($_FILES['photo'])) {
+if ($_FILES['photo']['size'] > 0) {
     // original file name + extension
     //echo $_FILES['photo']['name'] . '<br />';
 
