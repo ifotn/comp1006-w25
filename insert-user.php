@@ -38,6 +38,32 @@ if (strlen(trim($password)) < 8) {
     $ok = false;
 }
 
+// recaptcha api validation for spam/bot protection
+$apiUrl = 'https://www.google.com/recaptcha/api/siteverify';
+$secretKey = '6LcrXwYrAAAAAEUaw1oXH0WLCc7a5dV74gQGSl4u';
+$response = $_POST['g-recaptcha-response']; // auto-generated token by recaptcha
+
+// make http request to recaptcha api and receive json response with google's score
+$apiResponse = file_get_contents($apiUrl . "?secret=$secretKey&response=$response");
+
+// decode json object response
+$decodedResponse = json_decode($apiResponse);
+
+// check if recaptcha success is true or false
+if ($decodedResponse->success == false) {
+    echo 'Are you human?';
+    $ok = false;
+}
+
+// or check by score instead
+if ($decodedResponse->score < 0.3) {
+    echo 'Are you human?';
+    $ok = false;
+}
+
+// echo $apiResponse;
+// exit();
+
 if ($ok) {
     // live aws db
     try {
